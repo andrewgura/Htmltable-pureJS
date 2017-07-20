@@ -1,0 +1,81 @@
+1) 	Create a SQLite database with 1 table and 3 columns
+
+
+		use DBI;
+		use strict;
+
+		my $driver   = "SQLite";
+		my $database = "databasenmae.db";
+		my $dsn = "DBI:$driver:dbname = $database";
+		my $userid = "admin";
+		my $password = "password";
+		my $dbh = DBI->connect($dsn, $userid, $password, { RaiseError => 1 })
+   		or die $DBI::errstr;
+
+
+
+
+		my $stmt = qq(CREATE TABLE PEOPLE
+  		 (ID INT PRIMARY KEY     NOT NULL,
+    		  FIRST_NAME           TEXT    NOT NULL,
+   		  LAST_NAME            TEXT,
+    		  HOME           TEXT    NOT NULL);
+
+		my $rv = $dbh->do($stmt);
+		if($rv < 0) {
+ 		  print $DBI::errstr;
+		} else {
+		   print "Table created successfully\n";
+		}
+
+
+
+
+
+2)	Connect To SQLite  database
+
+		use DBI;
+		use strict;
+
+		my $driver   = "SQLite";
+		my $database = "databasenmae.db";
+		my $dsn = "DBI:$driver:dbname = $database";
+		my $userid = "admin";
+		my $password = "password";
+		my $dbh = DBI->connect($dsn, $userid, $password, { RaiseError => 1 })
+   		or die $DBI::errstr;
+
+
+
+
+3/4)	Select and Print created table
+
+		use DBI;
+		use strict;
+
+		my $driver   = "SQLite";
+		my $database = "databasenmae.db";
+		my $dsn = "DBI:$driver:dbname = $database";
+		my $userid = "admin";
+		my $password = "password";
+		my $dbh = DBI->connect($dsn, $userid, $password, { RaiseError => 1 })
+   		or die $DBI::errstr;
+
+
+
+
+
+
+		my $stmt = qq(SELECT id, first_name, last_name, home from PEOPLE;);
+		my $sth = $dbh->prepare( $stmt );
+		my $rv = $sth->execute() or die $DBI::errstr;
+
+		if($rv < 0) {
+   			print $DBI::errstr;
+		}
+
+		while(my @row = $sth->fetchrow_array()) {
+ 		     print FIRST NAME = ". $row[0] . "\n";
+		     print "LAST NAME = ". $row[1] ."\n";
+    	  	     print "HOME = ". $row[2] ."\n";
+		}
